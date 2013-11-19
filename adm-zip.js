@@ -1,5 +1,4 @@
 var fs = require("fs"),
-    buffer = require("buffer"),
     pth = require("path");
 
 var ZipEntry = require("./zipEntry"),
@@ -239,7 +238,7 @@ module.exports = function(/*String*/inPath) {
          * @param comment
          * @param attr
          */
-        addFile : function(/*String*/entryName, /*Buffer*/content, /*String*/comment, /*Number*/attr) {
+        addFile : function(/*String*/entryName, /*Buffer*/content, /*String*/comment, /*Number*/attr, /*Date*/time) {
             var entry = new ZipEntry();
             entry.entryName = entryName;
             entry.comment = comment || "";
@@ -248,7 +247,7 @@ module.exports = function(/*String*/inPath) {
                 throw Utils.Errors.DIRECTORY_CONTENT_ERROR;
             }
             entry.setData(content);
-            entry.header.time = new Date();
+            entry.header.time = time || new Date();
             _zip.setEntry(entry);
         },
 
